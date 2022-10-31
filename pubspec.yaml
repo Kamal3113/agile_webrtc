@@ -57,7 +57,10 @@ dependencies:
     git:
       url: https://github.com/decodedhealth/flutter_zoom_plugin.git
       ref: 0.0.8
-  
+  flutter_webrtc:  ^0.5.9
+  firebase_core: ^0.5.0+1
+  cloud_firestore: 
+  cloud_firestore_web: 
   # platform: ^3.1.0
 dev_dependencies:
   flutter_test:

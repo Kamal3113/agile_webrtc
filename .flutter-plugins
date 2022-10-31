@@ -1,0 +1,19 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.14.4/
+cloud_firestore_web=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-0.2.1+2/
+firebase_core=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.5.3/
+firebase_core_web=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.1+1/
+firebase_messaging=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-7.0.3/
+flutter_webrtc=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/flutter_webrtc-0.5.9/
+flutter_zoom_plugin=/Users/development/newodeveloper/flutter 2/.pub-cache/git/flutter_zoom_plugin-88d1fa2685f28d67410d46e094461a0a030d3192/
+path_provider=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.28/
+path_provider_linux=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/
+path_provider_macos=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+8/
+path_provider_windows=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.5/
+shared_preferences=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.12+4/
+shared_preferences_linux=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-0.0.2+4/
+shared_preferences_macos=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+11/
+shared_preferences_web=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/
+shared_preferences_windows=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-0.0.2+3/
+sqflite=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/sqflite-1.3.2+4/
+webview_flutter=/Users/development/newodeveloper/flutter 2/.pub-cache/hosted/pub.dartlang.org/webview_flutter-1.0.7/

@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:doctoragileapp/screens/zoomwebmeeting.dart';
+import 'package:doctoragileapp/webrtc_videoCall/signaling.dart';
+import 'package:doctoragileapp/webrtc_videoCall/video_page.dart';
 import 'package:doctoragileapp/widget/joinmeeting.dart';
 import 'package:doctoragileapp/widget/zoommeeting.dart';
 import 'package:flutter/material.dart';
 import 'package:doctoragileapp/api.dart';
 import 'package:doctoragileapp/color.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:http/http.dart' as http;
 import 'package:doctoragileapp/messagelist.dart';
 import 'package:path/path.dart';
@@ -26,12 +29,35 @@ class Chatlist extends StatefulWidget {
 
 class _TestcatState extends State<Chatlist>
     with SingleTickerProviderStateMixin {
+  Signaling signaling = Signaling();
+  RTCVideoRenderer _localRenderer = RTCVideoRenderer();
+  RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
+  String roomId;
+  TextEditingController textEditingController = TextEditingController(text: '');
+  bool recording = false;
+  int _time = 0;
   @override
   void initState() {
+    _localRenderer.initialize();
+    _remoteRenderer.initialize();
+    // requestPermissions();
+    // startTimer();
+    signaling.onAddRemoteStream = ((stream) {
+      _remoteRenderer.srcObject = stream;
+      setState(() {});
+    });
+    signaling.openUserMedia(_localRenderer, _remoteRenderer);
     super.initState();
 
     getid();
     startTimer();
+  }
+
+  @override
+  void dispose() {
+    _localRenderer.dispose();
+    _remoteRenderer.dispose();
+    super.dispose();
   }
 
   static Database _db;
@@ -171,6 +197,7 @@ class _TestcatState extends State<Chatlist>
     });
   }
 
+  var confirmVideo;
   void _loadingCall(bool value, BuildContext context) {
     if (value == true) {
       showDialog(
@@ -324,7 +351,7 @@ class _TestcatState extends State<Chatlist>
   //         duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
   //   }
   // }
-
+  var dd;
   Widget _senderbuttton(BuildContext context) {
     return Container(
       // color: primarylightcolor,
@@ -362,13 +389,37 @@ class _TestcatState extends State<Chatlist>
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.videocam_rounded),
-                  onPressed: () {
-                    _getTokenCred(context);
-                    if (message.text != "") {
-                      message.clear();
-                    } else {
-                      return;
-                    }
+                  onPressed: () async {
+                    roomId = await signaling.createRoom(_remoteRenderer);
+                    // textEditingController.text = "start" + roomId;
+                    //  _sendmessage();
+                    setState(() {
+                      confirmVideo = 1;
+                      textEditingController.text = "start" + roomId;
+                      dd = "start" + roomId;
+                      message.text = dd;
+                    });
+                    _sendmessage();
+                    print(dd);
+                    // if (message.text != dd) {
+                    //   _sendmessage();
+                    //   message.clear();
+                    // } else {
+                    //   return;
+                    // }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoPage(
+                                  localvideo: _localRenderer,
+                                  remotevideo: _remoteRenderer,
+                                )));
+                    // _getTokenCred(context);
+                    // if (message.text != "") {
+                    //   message.clear();
+                    // } else {
+                    //   return;
+                    // }
                   }),
               Container(
                   padding: const EdgeInsets.all(10.0),
@@ -488,9 +539,11 @@ class _TestcatState extends State<Chatlist>
                           bottomRight: Radius.circular(25),
                         ),
                       ),
-                      child: _getMeetingCred[0]
-                              .toString()
-                              .startsWith("**meeting")
+                      child: message.text.startsWith("start")
+                          // dd.startsWith("start")
+                          // _getMeetingCred[0].toString().startsWith("start"
+                          //         //  "**meeting"
+                          //         )
                           ? IconButton(
                               tooltip: "zoom meeting",
                               icon: Icon(
