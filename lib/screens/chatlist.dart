@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:doctoragileapp/screens/zoomwebmeeting.dart';
+import 'package:doctoragileapp/testvideo.dart';
+import 'package:doctoragileapp/upcomingappntmnt.dart';
 import 'package:doctoragileapp/webrtc_videoCall/signaling.dart';
 import 'package:doctoragileapp/webrtc_videoCall/video_page.dart';
 import 'package:doctoragileapp/widget/joinmeeting.dart';
@@ -177,6 +179,99 @@ class _TestcatState extends State<Chatlist>
         });
       }
     });
+  }
+
+  void _onLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.tealAccent,
+          child: Container(
+            height: 80,
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(),
+                new Text("Loading"),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    new Future.delayed(new Duration(seconds: 5), () {
+      return Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TestVideo(
+                  localvideo: _localRenderer, remotevideo: _remoteRenderer)
+              //  VideoPage(
+              //       localvideo: _localRenderer,
+              //       remotevideo: _remoteRenderer,
+              //     )
+              ));
+      //startVideo(context);
+    });
+  }
+
+  startVideo(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width - 10,
+                height: MediaQuery.of(context).size.height - 80,
+                padding: EdgeInsets.all(20),
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                                child:
+                                    RTCVideoView(_localRenderer, mirror: true)),
+                            Expanded(child: RTCVideoView(_remoteRenderer)),
+                            Container(
+                              height: 50,
+                              child: FloatingActionButton(
+                                  onPressed: () {
+                                    signaling.hangUp(_localRenderer);
+                                    //  Navigator.pop(context);
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                Upcomingappointment()),
+                                        (Route<dynamic> route) => false);
+                                  },
+                                  child: Icon(Icons.call_end_outlined)),
+                            )
+                            // IconButton(
+                            //     onPressed: () {
+                            //       signaling.hangUp(_localRenderer);
+                            //     },
+                            //     icon: Icon(Icons.call_end_outlined))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 
   DateTime dateTime = DateTime.now();
@@ -400,20 +495,27 @@ class _TestcatState extends State<Chatlist>
                       message.text = dd;
                     });
                     _sendmessage();
-                    print(dd);
+                    _onLoading(context);
+                    //  startVideo(context);
+                    //   print(dd.last);
                     // if (message.text != dd) {
                     //   _sendmessage();
                     //   message.clear();
                     // } else {
                     //   return;
                     // }
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VideoPage(
-                                  localvideo: _localRenderer,
-                                  remotevideo: _remoteRenderer,
-                                )));
+                    // return Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => TestVideo(
+
+                    //             //  remotevideo: _remoteRenderer
+                    //             )
+                    //         //  VideoPage(
+                    //         //       localvideo: _localRenderer,
+                    //         //       remotevideo: _remoteRenderer,
+                    //         //     )
+                    //         ));
                     // _getTokenCred(context);
                     // if (message.text != "") {
                     //   message.clear();
@@ -539,42 +641,45 @@ class _TestcatState extends State<Chatlist>
                           bottomRight: Radius.circular(25),
                         ),
                       ),
-                      child: message.text.startsWith("start")
+                      child:
+                          // message.text.startsWith("start")
                           // dd.startsWith("start")
-                          // _getMeetingCred[0].toString().startsWith("start"
-                          //         //  "**meeting"
-                          //         )
-                          ? IconButton(
-                              tooltip: "zoom meeting",
-                              icon: Icon(
-                                Icons.videocam,
-                                color: Colors.blue,
-                              ),
-                              onPressed: () {
-                                // setState(() {
-                                //   message.text=_getMeetingCred[1].toString();
-                                // });
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (context) {
-                                //       return MeetingWidget(
-                                //           displayname: "kamal",
-                                //           meetingId:
-                                //               _getMeetingCred[1].toString(),
-                                //           meetingPassword:
-                                //               _getMeetingCred[3].toString());
-                                //     },
-                                //   ),
-                                // );
-                              })
-                          : Text(
-                              messageslist[index]['messagelist'],
-                              // fetchmeassagedata[index]['message_summary'],messagelist
-                              style:
-                                  Theme.of(context).textTheme.bodyText2.apply(
+                          _getMeetingCred[0].toString().startsWith("start"
+                                  //"**meeting"
+                                  )
+                              ? IconButton(
+                                  tooltip: "zoom meeting",
+                                  icon: Icon(
+                                    Icons.videocam,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () {
+                                    // setState(() {
+                                    //   message.text=_getMeetingCred[1].toString();
+                                    // });
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) {
+                                    //       return MeetingWidget(
+                                    //           displayname: "kamal",
+                                    //           meetingId:
+                                    //               _getMeetingCred[1].toString(),
+                                    //           meetingPassword:
+                                    //               _getMeetingCred[3].toString());
+                                    //     },
+                                    //   ),
+                                    // );
+                                  })
+                              : Text(
+                                  messageslist[index]['messagelist'],
+                                  // fetchmeassagedata[index]['message_summary'],messagelist
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .apply(
                                         color: Colors.white,
                                       ),
-                            ),
+                                ),
                     ),
                     SizedBox(
                       height: 7,
