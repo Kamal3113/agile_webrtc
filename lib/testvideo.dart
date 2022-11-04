@@ -63,7 +63,7 @@ class _TestVideoState extends State<TestVideo> {
                 color: Colors.white,
               )),
         ),
-        body: Column(
+        body: new Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
@@ -92,9 +92,13 @@ class _TestVideoState extends State<TestVideo> {
                           children: [
                             AspectRatio(
                                 aspectRatio: 1 / 1.8,
-                                child: Expanded(
-                                    child: RTCVideoView(widget.localvideo,
-                                        mirror: true))),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                        child: RTCVideoView(widget.localvideo,
+                                            mirror: true)),
+                                  ],
+                                )),
                             Positioned(
                                 bottom: 10,
                                 right: 1,
@@ -111,9 +115,13 @@ class _TestVideoState extends State<TestVideo> {
                                       // color: Colors.red,
                                       child: AspectRatio(
                                           aspectRatio: 2,
-                                          child: Expanded(
-                                              child: RTCVideoView(
-                                                  widget.remotevideo)))),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                  child: RTCVideoView(
+                                                      widget.remotevideo)),
+                                            ],
+                                          ))),
                                 )),
                           ],
                         )
@@ -121,9 +129,13 @@ class _TestVideoState extends State<TestVideo> {
                           children: [
                             AspectRatio(
                                 aspectRatio: 1 / 1.8,
-                                child: Expanded(
-                                    child: RTCVideoView(widget.remotevideo,
-                                        mirror: true))),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                        child: RTCVideoView(widget.remotevideo,
+                                            mirror: true)),
+                                  ],
+                                )),
                             Positioned(
                                 bottom: 10,
                                 right: 1,
@@ -140,9 +152,13 @@ class _TestVideoState extends State<TestVideo> {
                                       // color: Colors.red,
                                       child: AspectRatio(
                                           aspectRatio: 2,
-                                          child: Expanded(
-                                              child: RTCVideoView(
-                                                  widget.localvideo)))),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                  child: RTCVideoView(
+                                                      widget.localvideo)),
+                                            ],
+                                          ))),
                                 )),
                           ],
                         )

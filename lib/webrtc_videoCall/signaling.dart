@@ -181,12 +181,20 @@ class Signaling {
     }
   }
 
+  MediaStream _localStream;
+  void switchCamera() {
+    switchCamera();
+    // if (_localStream != null) {
+    //   _localStream.getVideoTracks()[0].switchCamera();
+    // }
+  }
+
   Future<void> openUserMedia(
     RTCVideoRenderer localVideo,
     RTCVideoRenderer remoteVideo,
   ) async {
     var stream = await navigator.mediaDevices
-        .getUserMedia({'video': true, 'audio': false});
+        .getUserMedia({'video': true, 'audio': true});
 
     localVideo.srcObject = stream;
     localStream = stream;
